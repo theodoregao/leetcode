@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class Solution {
     public int ladderLength(String beginWord, String endWord, Set<String> wordList) {
-        wordList.add(endWord);
         List<String> queue = new LinkedList<String>();
         List<Integer> lengths = new LinkedList<Integer>();
         queue.add(beginWord);
@@ -21,10 +20,10 @@ public class Solution {
         while (index < queue.size()) {
             str = queue.get(index);
             length = lengths.get(index);
-            if (str.equals(endWord)) return length;
             for (int k = 0; k < n; k++) {
                 for (int ch = 'a'; ch <= 'z'; ch++) {
                     nextStr = str.substring(0, k) + (char)ch + str.substring(k + 1);
+                    if (nextStr.equals(endWord)) return length + 1;
                     if (wordList.contains(nextStr)) {
                         queue.add(nextStr);
                         lengths.add(length + 1);
