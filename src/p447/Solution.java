@@ -13,7 +13,7 @@ public class Solution {
             for (int j = 0; j < n; j++) {
                 if (j == i) continue;
                 int d = getDistance(points[i], points[j]);
-                map.put(d, map.getOrDefault(d, 0) + 1);
+                map.put(d, map.containsKey(d) ? map.get(d) + 1 : 1);
             }
             for (int v: map.values()) count += v * (v - 1);
         }

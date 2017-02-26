@@ -16,7 +16,7 @@ public class Solution {
         path = new LinkedList<String>();
         
         for (String[] ticket: tickets) {
-            flights.putIfAbsent(ticket[0], new PriorityQueue<String>());
+        	if (!flights.containsKey(ticket[0])) flights.put(ticket[0], new PriorityQueue<String>());
             flights.get(ticket[0]).add(ticket[1]);
         }
         
