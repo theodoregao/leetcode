@@ -2,31 +2,55 @@ package p295;
 
 public class MedianFinder {
     
-    PriorityQueue min;
-    PriorityQueue max;
+    private PriorityQueue min;
+    private PriorityQueue max;
+    private boolean even; 
 
     /** initialize your data structure here. */
     public MedianFinder() {
         min = new PriorityQueue(false);
         max = new PriorityQueue(true);
+        even = true;
     }
     
     public void addNum(int num) {
-        if (min.size() == 0) min.enqueue(num);
-        else if (num > min.peek()) min.enqueue(num);
-        else max.enqueue(num);
-        if (min.size() > max.size() + 1)
-            max.enqueue(min.dequeue());
-        else if (min.size() + 1 < max.size())
+        if (even) {
+            max.enqueue(num);
             min.enqueue(max.dequeue());
+        }
+        else {
+            min.enqueue(num);
+            max.enqueue(min.dequeue());
+        }
+        even = !even;
     }
     
     public double findMedian() {
-        if (min.size() == 0 && max.size() == 0) return 0.0;
-        else if (min.size() == max.size()) return (min.peek() + max.peek()) / 2.0;
-        else if (min.size() > max.size()) return min.peek();
-        else return max.peek();
+        return even ? (max.peek() + min.peek()) / 2.0 : min.peek(); 
     }
+
+//    /** initialize your data structure here. */
+//    public MedianFinder() {
+//        min = new PriorityQueue(false);
+//        max = new PriorityQueue(true);
+//    }
+//    
+//    public void addNum(int num) {
+//        if (min.size() == 0) min.enqueue(num);
+//        else if (num > min.peek()) min.enqueue(num);
+//        else max.enqueue(num);
+//        if (min.size() > max.size() + 1)
+//            max.enqueue(min.dequeue());
+//        else if (min.size() + 1 < max.size())
+//            min.enqueue(max.dequeue());
+//    }
+//    
+//    public double findMedian() {
+//        if (min.size() == 0 && max.size() == 0) return 0.0;
+//        else if (min.size() == max.size()) return (min.peek() + max.peek()) / 2.0;
+//        else if (min.size() > max.size()) return min.peek();
+//        else return max.peek();
+//    }
     
     private static class PriorityQueue {
         private static final int DEFAULT_SIZE = 16;
