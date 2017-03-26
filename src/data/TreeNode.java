@@ -1,4 +1,4 @@
-package node;
+package data;
 public class TreeNode {
      public int val;
      public TreeNode left;

@@ -3,7 +3,7 @@ package p235;
 import java.util.HashSet;
 import java.util.Set;
 
-import node.TreeNode;
+import data.TreeNode;
 
 public class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
