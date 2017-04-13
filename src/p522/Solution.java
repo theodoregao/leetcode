@@ -19,7 +19,7 @@ public class Solution {
         
         for (String str: map.keySet()) {
             if (map.get(str) == 1) {
-                System.out.println("find " + str + ": " + trie.search(str));
+//                System.out.println("find " + str + ": " + trie.search(str));
                 if (!trie.search(str)) maxLength = Math.max(maxLength, str.length());
             }
         }
