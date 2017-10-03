@@ -1,63 +1,50 @@
 package p042;
 
-import java.util.Stack;
-
 public class Solution {
+
 //    public int trap(int[] height) {
-//        if (height.length == 0) return 0;
-//        int max = 0;
-//        for (int i = 1; i < height.length; i++) if (height[max] < height[i]) max = i;
-//        
-//        int[] left = new int[max + 1];
-//        for (int i = 0; i <= max; i++) left[i] = height[i];
-//        
-//        int[] right = new int[height.length - max];
-//        for (int i = 0, j = height.length - 1; i < right.length; i++, j--) right[i] = height[j];
-//        
-//        return calculateTrap(left) + calculateTrap(right);
-//    }
-//    
-//    private int calculateTrap(int[] height) {
-//        if (height.length <= 1) return 0;
-//        Stack<Integer> stack = new Stack<>();
-//        int sum = 0;
-//        int maxHeight = height[0];
-//        int h;
-//        
-//        for (int i = 0; i < height.length; i++) {
-//            h = height[i];
-//            if (stack.isEmpty() || maxHeight >= h) stack.push(i);
-//            else {
-//                while(!stack.isEmpty()) sum += maxHeight - height[stack.pop()];
-//                stack.push(i);
-//                maxHeight = h;
-//            }
+//        if (height.length <= 2) return 0;
+//        int[] rightHeight = new int[height.length];
+//        int maxHeight = 0;
+//        for (int i = height.length - 1; i >= 0; i--) {
+//            rightHeight[i] = maxHeight;
+//            maxHeight = Math.max(maxHeight, height[i]);
 //        }
-//        while(!stack.isEmpty()) sum += maxHeight - height[stack.pop()];
-//        
-//        return sum;
+//        int leftHeight = height[0];
+//        int res = 0;
+//        for (int i = 1; i < height.length; i++) {
+//            if (height[i] < rightHeight[i] && height[i] < leftHeight)
+//                res += Math.min(rightHeight[i], leftHeight) - height[i];
+//            leftHeight = Math.max(leftHeight, height[i]);
+//        }
+//        return res;
 //    }
     
+
     public int trap(int[] height) {
-        if (height.length < 3) return 0;
-        int sum = 0;
-        int maxLeft = height[0], maxRight = height[height.length - 1];
-        for (int i = 0, j = height.length - 1; i < j; ) {
-            if (height[i] < height[j]) {
-                i++;
-                if (height[i] > maxLeft) maxLeft = height[i];
-                else sum += maxLeft - height[i];
+        if (height.length <= 2) return 0;
+        
+        int n = height.length;
+        int left = height[0];
+        int right = height[n - 1];
+        int res = 0;
+        
+        for (int i = 0, j = n - 1; i < j; ) {
+            if (height[i] <= height[j]) {
+                if (left > height[i] && right > height[i]) res += Math.min(left, right) - height[i];
+                left = Math.max(left, height[i++]);
             }
             else {
-                j--;
-                if (height[j] > maxRight) maxRight = height[j];
-                else sum += maxRight - height[j];
+                if (left > height[j] && right > height[j]) res += Math.min(left, right) - height[j];
+                right = Math.max(right, height[j--]);
             }
         }
-        return sum;
+        
+        return res;
     }
     
     public static void main(String[] args) {
-        System.out.println(new Solution().trap(new int[] {0,1,0,2,1,0,1,3,2,1,3,2,1,2,1}));
+        System.out.println(new Solution().trap(new int[] {0,1,0,2,1,0,1,3,2,1,2,1}));
+        System.out.println(new Solution().trap(new int[] {2,0,2}));
     }
 }
