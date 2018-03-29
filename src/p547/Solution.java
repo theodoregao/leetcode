@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Solution {
-    public int findCircleNum(int[][] M) {
+    public int _findCircleNum(int[][] M) {
         Graph graph = new Graph();
         for (int i = 0; i < M.length; i++)
             for (int j = i; j < M.length; j++)
@@ -14,6 +14,16 @@ public class Solution {
         System.out.println(graph.vertex().size());
         System.out.println(new ConnectedComponent(graph).getCount());
         return new ConnectedComponent(graph).getCount();
+    }
+    
+    public int findCircleNum(int[][] M) {
+        UnionFind unionFind = new UnionFind(M.length);
+        for (int i = 0; i < M.length; i++) {
+            for (int j = i + 1; j < M.length; j++) {
+                if (M[i][j] == 1) unionFind.union(i, j);
+            }
+        }
+        return unionFind.count();
     }
     
     private class Graph {
@@ -48,5 +58,45 @@ public class Solution {
                 if (!marked.contains(v)) dfs(graph, v);
         }
         public int getCount() { return count; }
+    }
+    
+    private class UnionFind {
+        private int count;
+        private int[] ids;
+        private int[] sizes;
+        
+        public UnionFind(int n) {
+            count = n;
+            ids = new int[n];
+            sizes = new int[n];
+            for (int i = 0; i < n; i++) {
+                ids[i] = i;
+                sizes[i] = 1;
+            }
+        }
+        
+        public int find(int p) {
+            if (ids[p] == p) return p;
+            return ids[p] = find(ids[p]);
+        }
+        
+        public void union(int p, int q) {
+            int i = find(p);
+            int j = find(q);
+            if (i == j) return;
+            if (sizes[i] > sizes[j]) {
+                ids[j] = i;
+                sizes[i] += sizes[j];
+            }
+            else {
+                ids[i] = j;
+                sizes[j] += sizes[i];
+            }
+            count--;
+        }
+        
+        public int count() {
+            return count;
+        }
     }
 }
