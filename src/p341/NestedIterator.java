@@ -1,8 +1,8 @@
 package p341;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 interface NestedInteger {
  
@@ -17,36 +17,45 @@ interface NestedInteger {
     // Return null if this NestedInteger holds a single integer
     public List<NestedInteger> getList();
 }
-public class NestedIterator implements Iterator<Integer> {
 
-	private Iterator<Integer> it;
-	
-    public NestedIterator(List<NestedInteger> nestedList) {
-    	List<Integer> values = new ArrayList<>();
-        travel(values, nestedList);
-        it = values.iterator();
-    }
+public class NestedIterator implements Iterator<Integer> {
     
-    private void travel(List<Integer> values,List<NestedInteger> list) {
-    	for (NestedInteger ni: list)
-    		if (ni.isInteger()) values.add(ni.getInteger());
-    		else travel(values, ni.getList());
+    private Stack<NestedInteger> stack;
+
+    public NestedIterator(List<NestedInteger> nestedList) {
+        stack = new Stack<>();
+        if (nestedList != null) {
+            for (int i = nestedList.size() - 1; i >= 0; i--) {
+                push(nestedList.get(i));
+            }
+        }
     }
 
     @Override
     public Integer next() {
-        return it.next();
+        check();
+        return stack.pop().getInteger();
+    }
+    
+    private void push(NestedInteger nestedInteger) {
+        if (nestedInteger.isInteger()) stack.push(nestedInteger);
+        else {
+            List<NestedInteger> nestedList = nestedInteger.getList();
+            for (int i = nestedList.size() - 1; i >= 0; i--) {
+                stack.push(nestedList.get(i));
+            }
+        }
+    }
+    
+    private void check() {
+        while (!stack.isEmpty() && !stack.peek().isInteger()) push(stack.pop());
     }
 
     @Override
     public boolean hasNext() {
-        return it.hasNext();
+        check();
+        return !stack.isEmpty();
     }
-
-	public void remove() {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
 /**

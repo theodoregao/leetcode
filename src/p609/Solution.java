@@ -17,7 +17,7 @@ public class Solution {
                 String file = tokens[i];
                 String fileName = file.substring(0, file.indexOf("("));
                 String content = file.substring(file.indexOf("(") + 1, file.indexOf(")"));
-                if (!map.containsKey(content)) map.put(content, new HashSet<>());
+                if (!map.containsKey(content)) map.put(content, new HashSet<String>());
                 map.get(content).add(dir + fileName);
             }
         }

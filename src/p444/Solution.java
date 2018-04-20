@@ -60,8 +60,8 @@ public class Solution {
         }
         
         public void addEdge(int u, int v) {
-            if (!edges.containsKey(u)) edges.put(u, new HashSet<>());
-            if (!edges.containsKey(v)) edges.put(v, new HashSet<>());
+            if (!edges.containsKey(u)) edges.put(u, new HashSet<Integer>());
+            if (!edges.containsKey(v)) edges.put(v, new HashSet<Integer>());
             edges.get(u).add(v);
             edgeCount++;
         }

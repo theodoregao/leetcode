@@ -26,7 +26,7 @@ public class Solution {
     
     private void travel(Map<Integer, List<Integer>> map, TreeNode node, int level) {
         if (node == null) return;
-        if (!map.containsKey(level)) map.put(level, new ArrayList<>());
+        if (!map.containsKey(level)) map.put(level, new ArrayList<Integer>());
         List<Integer> list = map.get(level);
         list.add(node.val);
         travel(map, node.left, level + 1);

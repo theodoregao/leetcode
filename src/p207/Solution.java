@@ -20,7 +20,7 @@ public class Solution {
         
         public Digraph(int n) {
             edges = new HashMap<>();
-            for (int i = 0; i < n; i++) edges.put(i, new HashSet<>());
+            for (int i = 0; i < n; i++) edges.put(i, new HashSet<Integer>());
         }
         
         public Digraph reverse() {

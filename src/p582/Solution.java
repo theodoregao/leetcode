@@ -12,7 +12,7 @@ public class Solution {
         List<Integer> killedPid = new ArrayList<>();
         Map<Integer, Set<Integer>> map = new HashMap<>();
         for (int i = 0; i < pid.size(); i++) {
-            if (!map.containsKey(ppid.get(i))) map.put(ppid.get(i), new HashSet<>());
+            if (!map.containsKey(ppid.get(i))) map.put(ppid.get(i), new HashSet<Integer>());
             map.get(ppid.get(i)).add(pid.get(i));
         }
         kill(killedPid, map, kill);
