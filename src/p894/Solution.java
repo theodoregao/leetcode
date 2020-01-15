@@ -20,6 +20,10 @@ class Solution {
     	if (N % 2 == 0) {
         	return trees;
         }
+    	if (N == 1) {
+    		trees.add(new TreeNode(0));
+    		return trees;
+    	}
         for (int i = 1; i < N; i += 2) {
         	for (TreeNode leftTree: allPossibleFBT(i)) {
         		for (TreeNode rightTree: allPossibleFBT(N - i - 1)) {
